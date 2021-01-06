@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410490501248",
+    "firebase_url": "https://rsa-des-chat-default-rtdb.firebaseio.com",
+    "project_id": "rsa-des-chat",
+    "storage_bucket": "rsa-des-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410490501248:android:36f7d015e9bbd1928a0e65",
+        "android_client_info": {
+          "package_name": "com.techno.secure_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410490501248-rj8c5hggv6o9kn9ttglbsg3acgv241k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfOS9H03zP3ox0smTLBxFuFSaHv-OJUEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410490501248-rj8c5hggv6o9kn9ttglbsg3acgv241k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
