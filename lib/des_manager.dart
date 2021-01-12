@@ -32,8 +32,8 @@ class TripleDes {
     //decrypted = des3CBC.decrypt(encrypted);
     print('Triple DES mode: CBC');
     print('encrypted: $encrypted');
-    print('encrypted (hex): ${hex.encode(encrypted)}');
-    print('encrypted (base64): ${base64.encode(encrypted)}');
+   // print('encrypted (hex): ${hex.encode(encrypted)}');
+   print('encrypted (base64): ${base64.encode(encrypted)}');
 
     return base64.encode(encrypted);//return Encrypted Message;
   }
@@ -42,7 +42,7 @@ String decryptTripleDES(String Encrypted){
   //encrypted = des3CBC.encrypt(message.codeUnits);
   decrypted = des3CBC.decrypt(base64.decode(Encrypted));
   print('decrypted: $decrypted');
-  print('decrypted (hex): ${hex.encode(decrypted)}');
+  //print('decrypted (hex): ${hex.encode(decrypted)}');
   print('decrypted (utf8): ${utf8.decode(decrypted)}');
 
   return utf8.decode(decrypted);// return Decrypted message

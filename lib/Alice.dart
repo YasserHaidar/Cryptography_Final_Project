@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _MyHomePageState extends State<Alice> {
   @override
   void initState() {
     setState(() {
+      Alice_DES_key = CreateCryptoRandomString().substring(0,24);
       getKey();
     });
     usermessage = new TextEditingController();
@@ -121,7 +123,7 @@ class _MyHomePageState extends State<Alice> {
 
   decryptSenderDESKey() {
     //print(Recieved_DES_Bob_Key);
-    if (Recieved_DES_Bob_Key != "" && Alice_private != "") {
+    if (Recieved_DES_Bob_Key != "" && Alice_private != "Not Generated Yet") {
       var helper = RsaKeyHelper();
       String msg = decrypt(
           Recieved_DES_Bob_Key,
@@ -160,9 +162,18 @@ class _MyHomePageState extends State<Alice> {
     String _encryptedM = d.encryptTripleDES(value);
     databaseReference
         .reference()
-        .child("chats/message${DateTime.now().microsecondsSinceEpoch}")
+        .child("chats/alice${DateTime.now().microsecondsSinceEpoch}")
         .set({'alice': _encryptedM});
     usermessage.clear();
+  }
+
+  static final Random _random = Random.secure();
+
+  String CreateCryptoRandomString([int length = 16]) {
+    var values = List<int>.generate(length, (i) => _random.nextInt(256));
+    print(base64Url.encode(values));
+
+    return base64Url.encode(values);
   }
 
   void deleteData() {
@@ -519,12 +530,15 @@ class _MyHomePageState extends State<Alice> {
                                 : "nothing"
                             : snapshot.value["bob"] != null
                                 ? Bob_Decrypted_DES == ""
-                                    ? snapshot.value["bob"]
+                                    ? "encrypted"
                                     : bob_des.decryptTripleDES(
                                         snapshot.value["bob"].toString())
                                 : "nothing";
                         return Container(
-                          child: Column(
+                          child:
+                          decMsg=="encrypted"?
+                              Container(height: 0,):
+                          Column(
                             crossAxisAlignment: me
                                 ? CrossAxisAlignment.end
                                 : CrossAxisAlignment.start,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<Bob> {
   @override
   void initState() {
     usermessage = TextEditingController();
-
+    Bob_DES_key = CreateCryptoRandomString().substring(0,24);
     setState(() {
       getKey();
     });
@@ -51,7 +53,14 @@ class _MyHomePageState extends State<Bob> {
   void dispose() {
     super.dispose();
   }
+  static final Random _random = Random.secure();
 
+  String CreateCryptoRandomString([int length = 16]) {
+    var values = List<int>.generate(length, (i) => _random.nextInt(256));
+    print(base64Url.encode(values));
+
+    return base64Url.encode(values);
+  }
   ///RSA =>
   Future<crypto.AsymmetricKeyPair> futureKeyPair;
   //to store the KeyPair once we get data from our future
@@ -157,7 +166,7 @@ class _MyHomePageState extends State<Bob> {
     String _encryptedM = d.encryptTripleDES(value);
     databaseReference
         .reference()
-        .child("chats/message${DateTime.now().microsecondsSinceEpoch}")
+        .child("chats/bob${DateTime.now().microsecondsSinceEpoch}")
         .set({'bob': _encryptedM});
     usermessage.clear();
   }
@@ -517,12 +526,12 @@ class _MyHomePageState extends State<Bob> {
                                 : "nothing"
                             : snapshot.value["alice"] != null
                                 ? Alice_Decrypted_DES == ""
-                                    ? snapshot.value["alice"]
+                                    ?"encrypted"
                                     : alice_des.decryptTripleDES(
                                         snapshot.value["alice"].toString())
                                 : "nothing";
                         return Container(
-                          child: Column(
+                          child:  decMsg=="encrypted"?Container(height: 0,):Column(
                             crossAxisAlignment: me
                                 ? CrossAxisAlignment.end
                                 : CrossAxisAlignment.start,
