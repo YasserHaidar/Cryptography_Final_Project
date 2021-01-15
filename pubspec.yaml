@@ -1,5 +1,5 @@
 name: secure_chat
-description: Final Project for CENG675 Cryptography course.This project is based on a secure communication model using RSA,3DES_OFB.
+description: Final Project for CENG625 Cryptography course.This project is based on a secure communication model using RSA,3DES_OFB.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
@@ -15,9 +15,6 @@ dependencies:
   rsa_encrypt:
   convert:
 
-  encrypt:
-
-  #firebase_core:
   firebase_database:
 
 

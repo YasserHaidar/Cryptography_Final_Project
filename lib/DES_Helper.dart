@@ -1,7 +1,3 @@
-// Modes of crypting / cyphering
-import 'dart:convert';
-import 'package:encrypt/encrypt.dart';
-
 enum DESMode { ECB, CBC, OFB }
 
 // The base class shared by des and triple des.
@@ -1201,7 +1197,7 @@ class DES3 {
       }
       return result;
     }
-    else if (mode == DESMode.OFB) {
+   /* else if (mode == DESMode.OFB) {
       _desFirst.iv = iv;
       _desSecond.iv = iv;
       _desThird.iv = iv;
@@ -1219,7 +1215,7 @@ class DES3 {
       }
       return result;
     }
-
+*/
     else {
       data = _desFirst.encrypt(data);
       data = _desSecond.decrypt(data);
@@ -1228,25 +1224,27 @@ class DES3 {
   }
 
   List<int> decrypt(List<int> data) {
-    if (mode == DESMode.CBC) {
-      _desFirst.iv = iv;
-      _desSecond.iv = iv;
-      _desThird.iv = iv;
-
-      List<int> result = [];
-      for (int i = 0; i < data.length; i += 8) {
-        iv = data.sublist(i, i + 8);
-        List<int> block;
-        block = _desThird.decrypt(iv);
-        block = _desSecond.encrypt(block);
-        block = _desFirst.decrypt(block);
+    try {
+      if (mode == DESMode.CBC) {
         _desFirst.iv = iv;
         _desSecond.iv = iv;
         _desThird.iv = iv;
-        result.addAll(block);
+
+        List<int> result = [];
+        for (int i = 0; i < data.length; i += 8) {
+          iv = data.sublist(i, i + 8);
+          List<int> block;
+          block = _desThird.decrypt(iv);
+          block = _desSecond.encrypt(block);
+          block = _desFirst.decrypt(block);
+          _desFirst.iv = iv;
+          _desSecond.iv = iv;
+          _desThird.iv = iv;
+          result.addAll(block);
+        }
+        data = result;
       }
-      data = result;
-    } else if (mode == DESMode.OFB) {
+      /* else if (mode == DESMode.OFB) {
       _desFirst.iv = iv;
       _desSecond.iv = iv;
       _desThird.iv = iv;
@@ -1264,12 +1262,16 @@ class DES3 {
         result.addAll(block);
       }
       data = result;
-    } else {
-      data = _desThird.decrypt(data);
-      data = _desSecond.encrypt(data);
-      data = _desFirst.decrypt(data);
+    }*/ else {
+        data = _desThird.decrypt(data);
+        data = _desSecond.encrypt(data);
+        data = _desFirst.decrypt(data);
+      }
     }
-
+    catch(Exception){
+      print(Exception.toString());
+      data="encrypted".codeUnits;
+    }
     return data;
   }
 }

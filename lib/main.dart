@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Icon(Icons.warning_rounded,color: Colors.yellow,),
             Center(
               child: Text(
-                "This Application provides an End-To-End Encryption for the conservation done between Alice and Bob.It is based on RSA and Triple DES with OFB mode",
+                "This Application provides an End-To-End Encryption for the conservation done between Alice and Bob.It is based on RSA and Triple DES with CBC mode",
                 style: TextStyle(color: Colors.redAccent, fontSize: 14,),
                 textAlign: TextAlign.center,
               ),

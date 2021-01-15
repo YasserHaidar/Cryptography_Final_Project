@@ -14,8 +14,7 @@ class Alice extends StatefulWidget {
 }
 
 TripleDes d;
-//String Bob_DES_key = "968314835893053678736231"; // for Bob
-String Alice_DES_key = "748394061928487102845723"; // for Alice
+String Alice_DES_key = "748394061928487102845723"; // default key for Alice in case Random secure didn't work
 final databaseReference = FirebaseDatabase.instance.reference();
 
 class _MyHomePageState extends State<Alice> {
